@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Questão 13 - OBMEP</title>
+
+<style>
+
+body{
+    font-family: Arial, sans-serif;
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+    background:#f4f4f4;
+    line-height:1.6;
+}
+
+h1,h2,h3{
+    color:#222;
+}
+
+.container{
+    max-width:900px;
+    margin:0 auto;
+    width:100%;
+}
+
+.bloco{
+    background:white;
+    padding:20px;
+    margin:20px auto;
+    border-radius:10px;
+    box-shadow:0 0 5px rgba(0,0,0,.15);
+    max-width:800px;
+}
+
+h1{
+    text-align:center;
+}
+
+.figura{
+    display:grid;
+    grid-template-columns:60px 60px 60px;
+    gap:5px;
+    margin:20px 0;
+    justify-content:center;
+    justify-items:center;
+}
+
+.casa{
+    width:60px;
+    height:60px;
+    border:2px solid black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:24px;
+    font-weight:bold;
+    background:white;
+}
+
+.vazio{
+    width:60px;
+    height:60px;
+}
+
+button{
+    padding:12px 20px;
+    font-size:16px;
+    cursor:pointer;
+    margin:20px auto;
+    display:block;
+}
+
+.solucao{
+    background:white;
+    padding:15px;
+    margin-top:15px;
+    border-radius:10px;
+    box-shadow:0 0 5px rgba(0,0,0,.15);
+}
+
+.footer{
+    max-width:800px;
+    margin:24px auto;
+    background:#f3fff9;
+    color:#2b5a49;
+    padding:12px 18px;
+    border-radius:14px;
+    text-align:center;
+    box-shadow:0 4px 10px rgba(43,90,73,0.06);
+    font-size:15px;
+}
+
+.footer .cute{
+    display:inline-block;
+    margin-left:8px;
+    background:#ffffff;
+    color:#2b5a49;
+    border-radius:50%;
+    padding:4px 6px;
+    font-size:12px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.06);
+}
+
+:root{
+    --bg: #ffffff;
+    --card: #ffffff;
+    --text: #222222;
+    --primary: #2b2b2b; /* minimal dark */
+    --accent: #f6f6f8;  /* light gray */
+    --muted: #6b6b6b;
+}
+
+
+body{
+    background: var(--bg);
+}
+
+.casa{
+    width:60px;
+    height:60px;
+    border:1px solid rgba(0,0,0,0.08);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:22px;
+    font-weight:600;
+    background:var(--card);
+    color:var(--text);
+    transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+    border-radius:8px;
+}
+
+
+.casa.empty{
+    background:var(--accent);
+    color:var(--muted);
+}
+
+.casa.placing{
+    transform:scale(1.04);
+    box-shadow:0 6px 12px rgba(0,0,0,0.06);
+}
+
+.figura .vazio{
+    background:transparent;
+    border:0;
+}
+
+.highlight{
+    outline:3px solid rgba(0,0,0,0.06);
+    outline-offset:4px;
+}
+
+/* quadradinhos da figura principal (enunciado) um pouco mais escuros */
+.figura.principal .casa{
+    background: #efeff2;
+    border:1px solid rgba(0,0,0,0.12);
+    color:var(--text);
+}
+
+.btn-play{
+    background:var(--primary);
+    color:white;
+    border:none;
+    padding:8px 12px;
+    border-radius:8px;
+    cursor:pointer;
+    margin-top:8px;
+}
+
+.solution-controls{
+    text-align:center;
+}
+
+pre{
+    background:#eee;
+    padding:10px;
+    border-radius:5px;
+    overflow:auto;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Questão 13 - OBMEP Nível 3</h1>
+
+<div class="bloco">
+
+<h2>Enunciado</h2>
+
+<p>
+Os quadradinhos da figura devem ser preenchidos com os números de 1 a 7,
+de modo que:
+</p>
+
+<ul>
+<li>os três números da linha horizontal fiquem em ordem crescente da esquerda para a direita;</li>
+<li>os três números em cada coluna vertical fiquem em ordem crescente de cima para baixo.</li>
+</ul>
+
+<p>
+De quantas maneiras é possível fazer esse preenchimento?
+</p>
+
+<div class="figura principal">
+<div class="casa"></div>
+<div class="casa"></div>
+<div class="casa"></div>
+
+<div class="casa"></div>
+<div class="vazio"></div>
+<div class="casa"></div>
+
+<div class="casa"></div>
+<div class="vazio"></div>
+<div class="casa"></div>
+</div>
+
+<p><b>Resposta correta: 15 maneiras.</b></p>
+
+</div>
+
+<div class="bloco">
+
+<h2>Resolução Matemática (OBMEP)</h2>
+
+<p>Nomeamos as posições:</p>
+
+<pre>
+A B C
+D   E
+F   G
+</pre>
+
+<p>As condições são:</p>
+
+<pre>
+A < B < C
+A < D < F
+C < E < G
+</pre>
+
+<p>
+A precisa ser menor que todos os outros números.
+Logo:
+</p>
+
+<pre>
+A = 1
+</pre>
+
+<p>
+Restam os números:
+</p>
+
+<pre>
+2,3,4,5,6,7
+</pre>
+
+<p>
+Sem restrições haveria:
+</p>
+
+<pre>
+6! = 720
+</pre>
+
+<p>
+As condições:
+</p>
+
+<pre>
+B < C
+D < F
+E < G
+</pre>
+
+<p>
+eliminam metade das possibilidades em cada par:
+</p>
+
+<pre>
+720 ÷ 2 ÷ 2 ÷ 2 = 90
+</pre>
+
+<p>
+Ainda precisamos garantir:
+</p>
+
+<pre>
+B < C < E < G
+</pre>
+
+<p>
+Das 90 distribuições, apenas 1/6 respeita essa ordem completa:
+</p>
+
+<pre>
+90 ÷ 6 = 15
+</pre>
+
+<h3>Resposta:</h3>
+
+<pre>
+15 maneiras
+</pre>
+
+</div>
+
+<div class="bloco">
+
+<h2>Resolução Computacional</h2>
+
+<p>O algoritmo:</p>
+
+<ol>
+<li>Gera todas as permutações dos números 1 a 7.</li>
+<li>Existem 7! = 5040 permutações.</li>
+<li>Verifica as condições:</li>
+</ol>
+
+<pre>
+A < B < C
+A < D < F
+C < E < G
+</pre>
+
+<p>
+Se todas forem verdadeiras, a configuração é válida.
+</p>
+
+<p>
+Ao final o contador retorna:
+</p>
+
+<pre>
+15
+</pre>
+
+</div>
+
+<button onclick="resolver()">
+Mostrar as 15 soluções
+</button>
+
+<div id="resultado"></div>
+
+<script>
+
+function permutar(arr){
+
+    let resultado=[];
+
+    function gerar(atual,restante){
+
+        if(restante.length===0){
+            resultado.push(atual);
+            return;
+        }
+
+        for(let i=0;i<restante.length;i++){
+
+            gerar(
+                [...atual,restante[i]],
+                [
+                    ...restante.slice(0,i),
+                    ...restante.slice(i+1)
+                ]
+            );
+        }
+    }
+
+    gerar([],arr);
+
+    return resultado;
+}
+
+function resolver(){
+
+    const numeros=[1,2,3,4,5,6,7];
+
+    const permutacoes=permutar(numeros);
+
+    let contador=0;
+
+    const container = document.getElementById("resultado");
+    container.innerHTML = "";
+
+    const header = document.createElement('div');
+    header.className = 'bloco';
+    header.innerHTML = `<h2>Total encontrado: <span id=tot>0</span></h2><p>Use o botão "Play" em cada solução para ver a animação passo-a-passo.</p>`;
+    const playAllBtn = document.createElement('button');
+    playAllBtn.className = 'btn-play';
+    playAllBtn.textContent = 'Play All';
+    playAllBtn.style.marginLeft = '8px';
+    header.querySelector('p').appendChild(playAllBtn);
+    container.appendChild(header);
+
+    const listWrap = document.createElement('div');
+    listWrap.style.display = 'grid';
+    listWrap.style.gridTemplateColumns = 'repeat(auto-fit,minmax(260px,1fr))';
+    listWrap.style.gap = '12px';
+    container.appendChild(listWrap);
+
+    permutacoes.forEach(p=>{
+
+        const [A,B,C,D,E,F,G]=p;
+
+        const valido=
+            A<B &&
+            B<C &&
+            A<D &&
+            D<F &&
+            C<E &&
+            E<G;
+
+        if(valido){
+            contador++;
+
+            const block = createSolutionBlock([A,B,C,D,E,F,G], contador);
+            listWrap.appendChild(block);
+        }
+    });
+
+    document.getElementById('tot').textContent = contador;
+
+    // bind play all
+    playAllBtn.addEventListener('click', async ()=>{
+        playAllBtn.disabled = true;
+        const blocks = Array.from(listWrap.querySelectorAll('.solucao'));
+        for(const b of blocks){
+            const figura = b.querySelector('.figura');
+            const play = b.querySelector('.btn-play');
+            const sol = b.dataset.sol.split(',').map(n=>parseInt(n,10));
+            await animateSolution(sol, figura, play);
+            await new Promise(r=>setTimeout(r,250));
+        }
+        playAllBtn.disabled = false;
+    });
+}
+
+function createSolutionBlock(sol, idx){
+    const wrap = document.createElement('div');
+    wrap.className = 'solucao';
+
+    const title = document.createElement('h3');
+    title.textContent = `Solução ${idx}`;
+    wrap.appendChild(title);
+
+    const figura = document.createElement('div');
+    figura.className = 'figura';
+
+    const names = ['A','B','C','D','_','E','F','_','G'];
+
+    names.forEach((n,i)=>{
+        if(n === '_'){
+            const v = document.createElement('div');
+            v.className = 'vazio';
+            figura.appendChild(v);
+        } else {
+            const c = document.createElement('div');
+            c.className = 'casa empty';
+            c.dataset.pos = n;
+            c.textContent = '';
+            figura.appendChild(c);
+        }
+    });
+
+    wrap.appendChild(figura);
+    // store solution data for external control
+    wrap.dataset.sol = sol.join(',');
+
+    const controls = document.createElement('div');
+    controls.className = 'solution-controls';
+    const play = document.createElement('button');
+    play.className = 'btn-play';
+    play.textContent = 'Play';
+    controls.appendChild(play);
+    wrap.appendChild(controls);
+
+    const info = document.createElement('p');
+    info.style.fontSize = '13px';
+    info.style.color = 'var(--muted)';
+    info.textContent = `A=${sol[0]}, B=${sol[1]}, C=${sol[2]}, D=${sol[3]}, E=${sol[4]}, F=${sol[5]}, G=${sol[6]}`;
+    wrap.appendChild(info);
+
+    // hover highlights
+    figura.querySelectorAll('.casa').forEach(cell=>{
+        cell.addEventListener('mouseenter', ()=> highlightGroups(cell.dataset.pos, figura, true));
+        cell.addEventListener('mouseleave', ()=> highlightGroups(cell.dataset.pos, figura, false));
+    });
+
+    play.addEventListener('click', ()=> animateSolution(sol, figura, play));
+
+    return wrap;
+}
+
+function highlightGroups(pos, figura, on){
+    // groups: row1: A,B,C ; col1: A,D,F ; col3: C,E,G
+    const map = {
+        'A': ['A','B','C','A','D','F'],
+        'B': ['A','B','C'],
+        'C': ['A','B','C','C','E','G'],
+        'D': ['A','D','F'],
+        'E': ['C','E','G'],
+        'F': ['A','D','F'],
+        'G': ['C','E','G']
+    };
+
+    const to = map[pos] || [];
+    figura.querySelectorAll('.casa').forEach(c=>{
+        if(on && to.indexOf(c.dataset.pos) !== -1){
+            c.classList.add('highlight');
+        } else {
+            c.classList.remove('highlight');
+        }
+    });
+}
+
+function animateSolution(sol, figura, btn){
+    return new Promise(resolve=>{
+        if(btn.disabled){ resolve(); return; }
+        btn.disabled = true;
+        const cells = Array.from(figura.querySelectorAll('.casa'));
+        const order = ['A','B','C','D','E','F','G'];
+        let i = 0;
+
+        function placeNext(){
+            if(i >= order.length){
+                btn.disabled = false;
+                resolve();
+                return;
+            }
+
+            const pos = order[i];
+            const val = sol[['A','B','C','D','E','F','G'].indexOf(pos)];
+            const cell = cells.find(c=>c.dataset.pos===pos);
+            if(!cell){ i++; placeNext(); return; }
+
+            // highlight relevant groups
+            highlightGroups(pos, figura, true);
+
+            cell.textContent = val;
+            cell.classList.remove('empty');
+            cell.classList.add('placing');
+
+            setTimeout(()=>{
+                cell.classList.remove('placing');
+                highlightGroups(pos, figura, false);
+                i++;
+                setTimeout(placeNext, 120);
+            }, 200);
+        }
+
+        // clear previous
+        cells.forEach(c=>{ c.textContent=''; c.classList.add('empty'); });
+        placeNext();
+    });
+}
+
+</script>
+
+<footer class="footer">
+    <p>Jullia Bertoldo Reis — Turma 3DS <span class="cute">✨</span></p>
+</footer>
+
+</body>
+</html>
